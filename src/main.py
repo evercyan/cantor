@@ -45,6 +45,8 @@ class Cantor:
             # 上传成功后, 调用 shell, 一键发布 git
             deploy = os.system('sh ' + CANTOR_PATH + '/deploy.sh')
             print('deploy', deploy)
+        else:
+            os.remove(file_tmp_path)
 
         path = '/' + file_md5[0:2] + '/' + file_md5 + '.' + file_suffix
         print('path', path)
