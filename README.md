@@ -20,6 +20,8 @@ python3 ./src/main.py
 
 ### 配置 mweb 图床
 
-> fork 当前仓库, 替换上图中的 "图片 URL 前缀" 中的用户名为自己的 github 用户名即可
+- fork 当前仓库
+- 替换下图中的 "图片 URL 前缀" 中的用户名为自己的 github 用户名即可
+- https://raw.githubusercontent.com/evercyan/cantor/master/resource
 
 ![](./assets/mweb-config.png)
