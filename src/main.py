@@ -43,7 +43,7 @@ class Cantor:
         if os.path.exists(file_real_path) is False:
             shutil.move(file_tmp_path, file_real_path)
             # 上传成功后, 调用 shell, 一键发布 git
-            deploy = os.system('sh ' + CANTOR_PATH + '/deploy.sh')
+            deploy = os.system('nohup sh ' + CANTOR_PATH + '/deploy.sh &')
             print('deploy', deploy)
         else:
             os.remove(file_tmp_path)
