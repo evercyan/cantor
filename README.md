@@ -25,7 +25,7 @@ python3 ./src/main.py
 curl POST 'http://127.0.0.1:7777/upload' --form 'file=@/tmp/abc.png'
 
 resp: {
-  "path": "https://raw.githubusercontent.com/evercyan/cantor/master/resource/a7/a7a8bade8d9ae355d5a47f9948b64178.png"
+  "path": "https://raw.githubusercontent.com/evercyan/cantor/master/resource/b0/b0a94e0bf957bbc6bfcb8504953b6ae7.png"
 }
 ```
 
@@ -35,4 +35,4 @@ resp: {
 - 替换 main.py 的 CANTOR_PREFIX 中的用户名和仓库名
 - 如下图配置 mweb 图床
 
-![cantor](https://raw.githubusercontent.com/evercyan/cantor/master/resource/a7/a7a8bade8d9ae355d5a47f9948b64178.png)
+![cantor](https://raw.githubusercontent.com/evercyan/cantor/master/resource/b0/b0a94e0bf957bbc6bfcb8504953b6ae7.png)
