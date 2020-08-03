@@ -7,8 +7,8 @@ import shutil
 
 HTTP_HOST = "127.0.0.1"
 HTTP_PORT = 7777
-CANTOR_PATH = os.path.dirname(os.path.realpath(__file__)) + '/../'
-RESOURCE_PATH = CANTOR_PATH + 'resource/'
+CANTOR_PATH = os.path.dirname(os.path.realpath(__file__)) 
+RESOURCE_PATH = CANTOR_PATH + '/resource/'
 
 
 # 图片上传处理
@@ -80,4 +80,5 @@ def upload():
 
 
 if __name__ == '__main__':
+    app.debug = True
     app.run(host=HTTP_HOST, port=HTTP_PORT)
