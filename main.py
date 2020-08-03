@@ -9,6 +9,8 @@ HTTP_HOST = "127.0.0.1"
 HTTP_PORT = 7777
 CANTOR_PATH = os.path.dirname(os.path.realpath(__file__)) 
 RESOURCE_PATH = CANTOR_PATH + '/resource/'
+# 远程图片地址前缀
+CANTOR_PREFIX = "https://raw.githubusercontent.com/evercyan/cantor/master/resource"
 
 
 # 图片上传处理
@@ -48,9 +50,7 @@ class Cantor:
         else:
             os.remove(file_tmp_path)
 
-        path = '/' + file_md5[0:2] + '/' + file_md5 + '.' + file_suffix
-        print('path', path)
-
+        path = CANTOR_PREFIX + '/' + file_md5[0:2] + '/' + file_md5 + '.' + file_suffix
         return {"path": path}
 
     def md5_file(self, file_path):
