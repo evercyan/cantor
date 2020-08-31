@@ -5,7 +5,7 @@
 	<key>CFBundleExecutable</key><string>cantor</string>
 	<key>CFBundleIdentifier</key><string>wails.cantor.0.1.0</string>
 	<key>CFBundleVersion</key><string>0.1.0</string>
-	<key>CFBundleGetInfoString</key><string>Built by evercyan at 31 Aug 20 18:23 CST using Wails (https://wails.app)</string>
+	<key>CFBundleGetInfoString</key><string>Built by evercyan at 31 Aug 20 18:24 CST using Wails (https://wails.app)</string>
 	<key>CFBundleShortVersionString</key><string>0.1.0</string>
 	<key>CFBundleIconFile</key><string>iconfile</string>
 	<key>NSHighResolutionCapable</key><string>true</string>
