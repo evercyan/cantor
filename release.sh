@@ -5,4 +5,5 @@ path="./build/${app}.app"
 file="./build/${app}.tar.gz"
 rm -rf $path
 wails build -p 
-tar zcvf $file $path
+cd "./build"
+tar zcvf "${app}.tar.gz" "${app}.app"
