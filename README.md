@@ -1,42 +1,66 @@
 # Cantor
 
-> self-use 图床服务
+> 基于 go wails + vue2 + github api 实现的个人图床 app
 
 ---
 
-### 流程一下
+#### QA
 
-- http 请求 cantor 上传图片
-- cantor 按规则存储图片
-- cantor 调用 deploy.sh 自动发布
-- cantor 返回远程图片地址
+```
+Q: cator?
+A: it means "康托尔集", 意指图床
 
-### 备注一下
+Q: 业务流程?
+A: 在 github 仓库图床仓库, 申请 accss_token 后, 在应用中配置好相关信息, 通过调用 github api 上传文件
 
-```shell
-# 安装依赖
-pip3 install -r requirements.txt
+Q: 系统运行日志
+A: /tmp/cantor.log
 
-# 启动服务
-sh run.sh
-
-# 调试服务
-python3 ./main.py
-``` 
-
-```shell
-# 可直接调用 api 访问
-curl POST 'http://127.0.0.1:7777/upload' --form 'file=@/tmp/abc.png'
-
-{
-  "path": "https://raw.githubusercontent.com/evercyan/cantor/master/resource/b0/b0a94e0bf957bbc6bfcb8504953b6ae7.png"
-}
+Q: 支持哪些系统 
+A: 仅 Mac 10.14+ 亲测
 ```
 
-### 配置 mweb
+---
 
-- fork 当前仓库
-- 替换 main.py 的 CANTOR_PREFIX 中的用户名和仓库名
-- 增加 mweb 图床配置
+#### Run
 
-![cantor](https://raw.githubusercontent.com/evercyan/cantor/master/resource/b0/b0a94e0bf957bbc6bfcb8504953b6ae7.png)
+```sh
+# 安装 wails 
+go get -u github.com/wailsapp/wails/cmd/wails
+wails -help
+
+# 下载 cantor
+git clone https://github.com/evercyan/cantor
+
+# 安装前端组件
+cd ./cantor/frontend/
+npm install
+
+# 启动后端服务
+cd ./cantor/
+sh run.sh debug
+
+# 启动前端服务
+cd ./cantor/frontend
+npm run serve
+
+# 打开 http://127.0.0.1:8080/
+```
+
+```sh
+# 生成可执行文件 ./build/cantor
+sh run.sh test 
+
+# 生成 mac app ./build/cantor.app
+sh run.sh build
+```
+
+---
+
+#### Snapshot
+
+![list](https://raw.githubusercontent.com/evercyan/cantor/master/resource/85/8583ac8715210074a080f90111cb55c1.png)
+
+![config](https://raw.githubusercontent.com/evercyan/cantor/master/resource/39/3951a5451f83f22e4a4867dd8bde4b93.png)
+
+![about](https://raw.githubusercontent.com/evercyan/cantor/master/resource/65/65add3fdae4cd2fddd0d711d3863cbc9.png)

@@ -1,8 +1,35 @@
-#/bin/bash
+#!/bin/bash
 
-ps aux | grep 'cantor/main.py' | grep -v 'grep' | awk '{print $2}' | xargs kill -9
+service=`basename $PWD`
+commands=(
+    "debug"
+    "test"
+    "build"
+)
 
-path=$(cd "$(dirname "$0")"; pwd)
-nohup python3 "${path}/main.py" >/dev/null 2>&1 &
+################################
 
-ps aux | grep 'cantor/main.py'
+debug() {
+    wails serve
+}
+
+test() {
+    wails build -d
+    `./build/${service}`
+}
+
+build() {
+    rm -rf "./build/${service}.app"
+    wails build -p 
+    `open ./build/${service}.app`
+}
+
+################################
+
+command=$1
+filter=`echo "${commands[@]}" | grep -w "$command"`
+if [ "${command}" == "" -o "${filter}" == "" ]; then
+	exit;
+fi
+
+$command

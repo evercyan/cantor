@@ -1,0 +1,22 @@
+{
+    "name": "cantor",
+    "description": "cantor",
+    "author": {
+        "name": "evercyan",
+        "email": "evercyan@qq.com"
+    },
+    "version": "0.1.0",
+    "binaryname": "cantor",
+    "frontend": {
+        "dir": "frontend",
+        "install": "npm install",
+        "build": "npm run build",
+        "bridge": "src",
+        "serve": "npm run serve"
+    },
+    "WailsVersion": "",
+    "CrossCompile": false,
+    "Platform": "",
+    "Architecture": "",
+    "LdFlags": ""
+}
