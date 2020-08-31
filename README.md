@@ -2,6 +2,8 @@
 
 > 基于 go wails + vue2 + github api 实现的个人图床 app
 
+[点我下载试用](https://github.com/evercyan/cantor/releases/download/v0.0.2/cantor.tar.gz)
+
 ---
 
 #### QA
@@ -64,3 +66,4 @@ sh run.sh build
 ![config](https://raw.githubusercontent.com/evercyan/cantor/master/resource/39/3951a5451f83f22e4a4867dd8bde4b93.png)
 
 ![about](https://raw.githubusercontent.com/evercyan/cantor/master/resource/65/65add3fdae4cd2fddd0d711d3863cbc9.png)
+

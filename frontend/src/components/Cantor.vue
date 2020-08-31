@@ -84,7 +84,7 @@
       </el-drawer>
 
       <el-drawer :with-header="false" :visible.sync="drawerAbout" size="50%" class="drawer-about">
-        <img src="@/assets/images/logo.png" class="logo"/>
+        <img src="@/assets/images/logo.png" class="logo" />
         <div>利用 github repo 打造个人图床应用</div>
         <el-divider></el-divider>
         <el-steps :active="3" direction="vertical" class="step-area">
@@ -231,6 +231,7 @@ export default {
               _this.loading = false;
               _this.$message.success(result);
               _this.drawerConfig = false;
+              _this.listInit();
             },
             function (error) {
               _this.loading = false;
