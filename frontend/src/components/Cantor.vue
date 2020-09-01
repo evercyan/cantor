@@ -1,6 +1,6 @@
 <template>
-  <el-container class="page-cantor" v-loading="loading">
-    <el-aside class="side-area" style="width: 71px;" :style="areaStyle">
+  <el-container class="page-cantor" v-loading="loading" :style="areaStyle">
+    <el-aside class="side-area" style="width: 71px;">
       <el-menu @select="onSelect">
         <el-tooltip effect="dark" content="上传文件" placement="right">
           <el-menu-item index="upload">
