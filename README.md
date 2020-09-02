@@ -2,13 +2,13 @@
 
 > 基于 go wails + vue2 + github api 实现的个人图床 app
 
-[点我下载试用](https://github.com/evercyan/cantor/releases/download/v0.0.2/cantor.tar.gz)
+[点我下载 mac app](https://github.com/evercyan/cantor/releases/download/v0.0.2/cantor.tar.gz)
 
 ---
 
-#### QA
+## QA
 
-```
+```txt
 Q: cator?
 A: it means "康托尔集", 意指图床
 
@@ -18,16 +18,23 @@ A: 在 github 仓库图床仓库, 申请 accss_token 后, 在应用中配置好�
 Q: 系统运行日志
 A: /tmp/cantor.log
 
-Q: 支持哪些系统 
+Q: 支持哪些系统
 A: 仅 Mac 10.14+ 亲测
+
+Q: repo 目录说明
+A:  |____resource           图床资源目录
+    | |____database.json    上传文件纪录
+    |____assets             特殊资源目录
+    |____backend            后端代码目录  
+    |____frontend           前端代码目录
 ```
 
 ---
 
-#### Run
+## Run
 
 ```sh
-# 安装 wails 
+# 安装 wails
 go get -u github.com/wailsapp/wails/cmd/wails
 wails -help
 
@@ -51,7 +58,7 @@ npm run serve
 
 ```sh
 # 生成可执行文件 ./build/cantor
-sh run.sh test 
+sh run.sh test
 
 # 生成 mac app ./build/cantor.app
 sh run.sh build
@@ -59,11 +66,10 @@ sh run.sh build
 
 ---
 
-#### Snapshot
+## Snapshot
 
 ![list](https://raw.githubusercontent.com/evercyan/cantor/master/resource/85/8583ac8715210074a080f90111cb55c1.png)
 
 ![config](https://raw.githubusercontent.com/evercyan/cantor/master/resource/39/3951a5451f83f22e4a4867dd8bde4b93.png)
 
 ![about](https://raw.githubusercontent.com/evercyan/cantor/master/resource/65/65add3fdae4cd2fddd0d711d3863cbc9.png)
-
