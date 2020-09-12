@@ -15,6 +15,7 @@ var (
 var log *logrus.Logger
 var once sync.Once
 
+// Log ...
 func Log() *logrus.Logger {
 	once.Do(func() {
 		log = logrus.New()

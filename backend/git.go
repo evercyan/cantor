@@ -15,6 +15,7 @@ var (
 	gitMessage = "auto deploy"
 )
 
+// Git ...
 type Git struct {
 	Repo        string `json:"repo"`
 	Owner       string `json:"owner"`
@@ -30,6 +31,7 @@ func (g *Git) resp(resp string) (string, error) {
 	return resp, nil
 }
 
+// Get 获取文件
 func (g *Git) Get(path string) (string, error) {
 	url := fmt.Sprintf(gitApiUrl, g.Owner, g.Repo, path, g.AccessToken)
 	resp, err := request.Get(url)
@@ -40,6 +42,7 @@ func (g *Git) Get(path string) (string, error) {
 	return g.resp(resp)
 }
 
+// Update 新增或更新文件
 func (g *Git) Update(path string, content string) error {
 	param := map[string]interface{}{
 		"message": gitMessage,
@@ -63,6 +66,7 @@ func (g *Git) Update(path string, content string) error {
 	return err
 }
 
+// Delete 删除文件
 func (g *Git) Delete(path string) error {
 	sha := g.Sha(path)
 	if sha == "" {
@@ -81,15 +85,18 @@ func (g *Git) Delete(path string) error {
 	return err
 }
 
+// Sha ...
 func (g *Git) Sha(path string) string {
 	resp, _ := g.Get(path)
 	return ljson.Json(resp).Key("sha").ToString()
 }
 
+// Api ...
 func (g *Git) Api(path string) string {
 	return fmt.Sprintf(gitApiUrl, g.Owner, g.Repo, path, g.AccessToken)
 }
 
+// Url ...
 func (g *Git) Url(path string) string {
 	return fmt.Sprintf(gitFileUrl, g.Owner, g.Repo, path)
 }

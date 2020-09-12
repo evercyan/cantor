@@ -1,9 +1,11 @@
 <div align="center">
 <img src="./appicon.png" width="200" alt="cantor" align=center />
 
+
+[![goreportcard](https://goreportcard.com/badge/github.com/evercyan/cantor)](https://goreportcard.com/report/github.com/evercyan/cantor)
 [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 
-基于 [wails](https://github.com/wailsapp/wails) + vue + [github-api](https://docs.github.com/cn/rest/reference/repos#contents) 实现的个人图床 mac app [点我下载](https://github.com/evercyan/cantor/releases/download/v0.0.2/cantor.tar.gz)
+基于 [wails](https://github.com/wailsapp/wails) + vue + [github-api](https://docs.github.com/cn/rest/reference/repos#contents) 实现的个人图床 mac app [点我下载](https://github.com/evercyan/cantor/releases/download/v0.0.3/cantor.tar.gz)
 </div>
 
 ---
@@ -17,8 +19,10 @@ A: it means "康托尔集", 意指图床
 
 ```txt
 Q: 使用应用前准备工作
-A: 在 github 新建仓库和申请 accss_token (在此申请 https://github.com/settings/tokens)
+A: 在 github 新建仓库和申请 accss_token
 ```
+
+[点我申请](https://github.com/settings/tokens)
 
 ```txt
 Q: 使用步骤
@@ -38,8 +42,8 @@ Q: repo 目录说明
 
 ```txt
 Q: 其他 blabla..
-- 应用日志位置在 /tmp/cantor.log
 - 暂只支持 Mac 10.14+
+- 应用日志位置在 /tmp/cantor.log
 - 上传图片最大 2M, 只支持 png gif jpg jpeg, 有需要可以下载代码自己调整 (./backend/app.go)
 ```
 

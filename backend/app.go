@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/d-tsuji/clipboard"
 	"github.com/evercyan/letitgo/crypto"
 	ljson "github.com/evercyan/letitgo/json"
 	"github.com/evercyan/letitgo/util"
@@ -26,12 +27,14 @@ var (
  * ********************************
  */
 
+// App ...
 type App struct {
 	RT         *wails.Runtime
 	ConfigFile string
 	Git        Git
 }
 
+// WailsInit ...
 func (a *App) WailsInit(runtime *wails.Runtime) error {
 	Log().Info("WailsInit")
 	a.RT = runtime
@@ -39,11 +42,13 @@ func (a *App) WailsInit(runtime *wails.Runtime) error {
 	return nil
 }
 
+// WailsShutdown ...
 func (a *App) WailsShutdown() {
 	Log().Info("WailsShutdown")
 	return
 }
 
+// 配置初始化
 func (a *App) initConfig() {
 	user, err := user.Current()
 	if err != nil {
@@ -67,6 +72,7 @@ func (a *App) initConfig() {
 	json.Unmarshal([]byte(configContent), &a.Git)
 }
 
+// Resp 返回封装
 func (a *App) Resp(code int, data interface{}) string {
 	return crypto.JsonEncode(map[string]interface{}{
 		"code": code,
@@ -92,12 +98,12 @@ func (a *App) getUploadList() []map[string]string {
  * ********************************
  */
 
-// 获取 git 配置
+// GetConfig 获取 git 配置
 func (a *App) GetConfig(param string) string {
 	return a.Resp(0, a.Git)
 }
 
-// 更新 git 配置
+// SetConfig 更新 git 配置
 func (a *App) SetConfig(param string) string {
 	Log().Info("SetConfig param ", param)
 	if err := json.Unmarshal([]byte(param), &a.Git); err != nil {
@@ -109,12 +115,12 @@ func (a *App) SetConfig(param string) string {
 	return a.Resp(0, "设置成功")
 }
 
-// 获取上传文件列表
+// GetUploadList 获取上传文件列表
 func (a *App) GetUploadList(param string) string {
 	return a.Resp(0, a.getUploadList())
 }
 
-// 上传文件
+// UploadFile 上传文件
 func (a *App) UploadFile(param string) string {
 	selectFile := a.RT.Dialog.SelectFile()
 	Log().Info("UploadFile selectFile ", selectFile)
@@ -176,7 +182,7 @@ func (a *App) UploadFile(param string) string {
 	return a.Resp(0, fileInfo)
 }
 
-// 删除文件
+// DeleteFile 删除文件
 func (a *App) DeleteFile(param string) string {
 	list := a.getUploadList()
 	for i := 0; i < len(list); i++ {
@@ -199,4 +205,15 @@ func (a *App) DeleteFile(param string) string {
 		Log().Info("UploadFile deleteErr ", deleteErr.Error())
 	}
 	return a.Resp(0, "")
+}
+
+// CopyFileUrl 复制链接
+func (a *App) CopyFileUrl(fileUrl string) string {
+	Log().Info("CopyFileUrl fileUrl ", fileUrl)
+	err := clipboard.Set(fileUrl)
+	if err != nil {
+		Log().Info("CopyFileUrl err ", err.Error())
+		return a.Resp(-1, err.Error())
+	}
+	return a.Resp(0, "已复制到粘贴板")
 }

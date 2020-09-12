@@ -2,21 +2,15 @@
   <el-container class="page-cantor" v-loading="loading" :style="areaStyle">
     <el-aside class="side-area" style="width: 71px;">
       <el-menu @select="onSelect">
-        <el-tooltip effect="dark" content="上传文件" placement="right">
-          <el-menu-item index="upload">
-            <i class="el-icon-upload"></i>
-          </el-menu-item>
-        </el-tooltip>
-        <el-tooltip effect="dark" content="设置" placement="right">
-          <el-menu-item index="setting">
-            <i class="el-icon-s-tools"></i>
-          </el-menu-item>
-        </el-tooltip>
-        <el-tooltip effect="dark" content="关于" placement="right">
-          <el-menu-item index="about">
-            <i class="el-icon-info"></i>
-          </el-menu-item>
-        </el-tooltip>
+        <el-menu-item index="upload" title="上传">
+          <i class="el-icon-upload"></i>
+        </el-menu-item>
+        <el-menu-item index="setting" title="配置">
+          <i class="el-icon-s-tools"></i>
+        </el-menu-item>
+        <el-menu-item index="about" title="关于">
+          <i class="el-icon-info"></i>
+        </el-menu-item>
       </el-menu>
     </el-aside>
 
@@ -29,7 +23,14 @@
       >
         <el-table-column label="图片" width="100">
           <template slot-scope="scope">
-            <el-image :src="scope.row.file_url" :preview-src-list="fileUrlList"></el-image>
+            <el-image :src="scope.row.file_url" :preview-src-list="fileUrlList">
+              <div slot="placeholder" class="image-slot">
+                <i class="el-icon-loading"></i>
+              </div>
+              <div slot="error" class="image-slot">
+                <i class="el-icon-picture-outline"></i>
+              </div>
+            </el-image>
           </template>
         </el-table-column>
         <el-table-column label="名称">
@@ -42,10 +43,20 @@
         <el-table-column label="操作" width="100">
           <template slot-scope="scope">
             <el-button
+              type="primary"
+              icon="el-icon-link"
+              size="mini"
+              circle
+              @click="onCopy(scope.row.file_url)"
+              title="复制链接"
+            ></el-button>
+            <el-button
               type="danger"
               icon="el-icon-delete"
               size="mini"
+              circle
               @click="onDelete(scope.row.file_path)"
+              title="删除"
             ></el-button>
           </template>
         </el-table-column>
@@ -59,7 +70,7 @@
         v-if="list.length > 0"
       ></el-pagination>
 
-      <el-drawer :with-header="false" :visible.sync="drawerConfig" size="50%">
+      <el-drawer :with-header="false" :visible.sync="drawerConfig" size="39%" class="config-area">
         <el-form ref="form" :model="config" :rules="rules" label-width="60px">
           <el-form-item label="仓库" prop="repo">
             <el-input v-model="config.repo" placeholder="cantor"></el-input>
@@ -72,9 +83,12 @@
           </el-form-item>
           <el-form-item label="私钥" prop="access_token">
             <el-input v-model="config.access_token"></el-input>
-            <span class="help-text">
-              <i class="el-icon-info"></i> 在此设置: https://github.com/settings/tokens
-            </span>
+            <el-link
+              @click="onLink('https://github.com/settings/tokens')"
+              type="info"
+              :underline="false"
+              icon="el-icon-info"
+            >申请 github 私钥</el-link>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSetting" :loading="loading">设置</el-button>
@@ -83,14 +97,16 @@
         </el-form>
       </el-drawer>
 
-      <el-drawer :with-header="false" :visible.sync="drawerAbout" size="50%" class="drawer-about">
+      <el-drawer :with-header="false" :visible.sync="drawerAbout" size="39%" class="about-area">
         <img src="@/assets/images/logo.png" class="logo" />
-        <div>利用 github repo 打造个人图床应用</div>
+        <div>
+          <el-link @click="onLink('https://github.com/evercyan/cantor')" type="primary">Cantor v0.03</el-link>
+        </div>
         <el-divider></el-divider>
-        <el-steps :active="3" direction="vertical" class="step-area">
-          <el-step title="配置" description="设置 github 相关配置"></el-step>
-          <el-step title="上传" description="点击左侧上传按钮上传文件到 repo"></el-step>
-          <el-step title="链接" description="点击打开列表中文件, 复制 github 链接"></el-step>
+        <el-steps :active="3" finish-status="process" direction="vertical" class="step-area">
+          <el-step title="配置" description="github 相关配置"></el-step>
+          <el-step title="上传" description="左侧按钮上传文件到 repo"></el-step>
+          <el-step title="链接" description="点击打开浏览器打开文件或复制链接"></el-step>
         </el-steps>
       </el-drawer>
     </el-main>
@@ -266,6 +282,19 @@ export default {
     },
     onLink: function (fileUrl) {
       window.wails.Browser.OpenURL(fileUrl);
+    },
+    onCopy: function (fileUrl) {
+      var _this = this;
+      _this.wails(
+        "CopyFileUrl",
+        fileUrl,
+        function (result) {
+          _this.$message.success(result);
+        },
+        function (error) {
+          _this.$message.error(error);
+        }
+      );
     },
   },
 };
