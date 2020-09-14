@@ -19,15 +19,16 @@ A: it means "康托尔集", 意指图床
 
 ```txt
 Q: 使用应用前准备工作
-A: 在 github 新建仓库和申请 accss_token
+A: 在 github 新建仓库和申请 access_token
 ```
 
-[点我申请](https://github.com/settings/tokens)
+[申请 access_token](https://github.com/settings/tokens)
 
 ```txt
 Q: 使用步骤
 - 打开应用, 填写相关配置 (配置存储于 ~/.cantor/config.json 中)
-- 点击上传图片文件, 应用会通过 github api 将图片文件上传至配置的仓库中, 并在应用列表中显示, 可直接打开链接复用
+- 点击上传图片文件, 应用会通过 github api 将图片文件上传至配置的仓库中
+- 应用上传文件列表中, 可点击标题打开链接, 亦可直接复制链接
 - 上传文件列表的数据存储在 仓库名/resource/database.json 中
 ```
 
@@ -42,9 +43,9 @@ Q: repo 目录说明
 
 ```txt
 Q: 其他 blabla..
-- 暂只支持 Mac 10.14+
+- 当前编译后 app 只支持 Mac 10.14+, 其他平台应用需下载源码, 自行编译
 - 应用日志位置在 /tmp/cantor.log
-- 上传图片最大 2M, 只支持 png gif jpg jpeg, 有需要可以下载代码自己调整 (./backend/app.go)
+- 上传图片最大 2M, 只支持 png gif jpg jpeg, 有需要可以下载源码自行编译
 ```
 
 ---
@@ -60,7 +61,7 @@ wails -help
 
 # 下载 cantor
 git clone https://github.com/evercyan/cantor
-# 本 repo 下 resource, assets 均是个人的资源目录, clone 后可直接删除
+# 本 repo 下 resource, assets 均是个人的资源存储, 和项目无关
 ```
 
 ### 浏览器调试
