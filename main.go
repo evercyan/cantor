@@ -1,7 +1,7 @@
 package main
 
 import (
-	"emoji/backend"
+	"github.com/evercyan/cantor/backend"
 
 	"github.com/leaanthony/mewn"
 	"github.com/wailsapp/wails"
@@ -11,8 +11,8 @@ func main() {
 	js := mewn.String("./frontend/dist/app.js")
 	css := mewn.String("./frontend/dist/app.css")
 	app := wails.CreateApp(&wails.AppConfig{
-		Width:            1024,
-		Height:           768,
+		Width:            800,
+		Height:           600,
 		Resizable:        true,
 		Title:            "Cantor",
 		JS:               js,

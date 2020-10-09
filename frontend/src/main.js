@@ -12,26 +12,8 @@ Vue.use(ElementUI);
 
 import * as Wails from '@wailsapp/runtime';
 
-// wails 调用封装
-Vue.prototype.wails = function (func, param, success, fail) {
-    window.backend.App[func](param).then((resp) => {
-        console.log('wails', func, param, resp)
-        try {
-            var result = JSON.parse(resp);
-            if (result.code === 0) {
-                success(result.data)
-            } else {
-                fail(result.data)
-            }
-        } catch (err) {
-            fail(resp)
-        }
-    });
-}
-
 Wails.Init(() => {
     new Vue({
         render: h => h(App),
     }).$mount('#app');
 });
-

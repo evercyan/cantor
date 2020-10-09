@@ -1,12 +1,12 @@
 {
-    "name": "cantor",
+    "name": "Cantor",
     "description": "cantor",
     "author": {
         "name": "evercyan",
         "email": "evercyan@qq.com"
     },
-    "version": "0.1.0",
-    "binaryname": "cantor",
+    "version": "v0.0.4",
+    "binaryname": "Cantor",
     "frontend": {
         "dir": "frontend",
         "install": "npm install",

@@ -1,18 +1,14 @@
-package backend
+package git
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 
+	"github.com/evercyan/cantor/backend/configs"
 	"github.com/evercyan/letitgo/crypto"
-	ljson "github.com/evercyan/letitgo/json"
+	j "github.com/evercyan/letitgo/json"
 	"github.com/evercyan/letitgo/request"
-)
-
-var (
-	gitApiUrl  = "https://api.github.com/repos/%s/%s/contents/%s?access_token=%s"
-	gitFileUrl = "https://raw.githubusercontent.com/%s/%s/master/%s"
-	gitMessage = "auto deploy"
 )
 
 // Git ...
@@ -23,8 +19,9 @@ type Git struct {
 	AccessToken string `json:"access_token"`
 }
 
+// resp ...
 func (g *Git) resp(resp string) (string, error) {
-	message := ljson.Json(resp).Key("message").ToString()
+	message := j.Json(resp).Key("message").ToString()
 	if message != "" {
 		return "", errors.New(message)
 	}
@@ -33,9 +30,8 @@ func (g *Git) resp(resp string) (string, error) {
 
 // Get 获取文件
 func (g *Git) Get(path string) (string, error) {
-	url := fmt.Sprintf(gitApiUrl, g.Owner, g.Repo, path, g.AccessToken)
+	url := fmt.Sprintf(configs.GitApiUrl, g.Owner, g.Repo, path, g.AccessToken)
 	resp, err := request.Get(url)
-	Log().Info("Git Get ", "resp ", resp, " err ", err)
 	if err != nil {
 		return "", err
 	}
@@ -45,7 +41,7 @@ func (g *Git) Get(path string) (string, error) {
 // Update 新增或更新文件
 func (g *Git) Update(path string, content string) error {
 	param := map[string]interface{}{
-		"message": gitMessage,
+		"message": configs.GitMessage,
 		"committer": map[string]string{
 			"name":  g.Owner,
 			"email": g.Email,
@@ -58,7 +54,6 @@ func (g *Git) Update(path string, content string) error {
 		param["sha"] = sha
 	}
 	resp, err := request.Request("PUT", g.Api(path), crypto.JsonEncode(param))
-	Log().Info("Git Update ", "resp ", resp, " err ", err)
 	if err != nil {
 		return err
 	}
@@ -73,11 +68,10 @@ func (g *Git) Delete(path string) error {
 		return errors.New("获取文件 sha 失败")
 	}
 	param := map[string]interface{}{
-		"message": gitMessage,
+		"message": configs.GitMessage,
 		"sha":     sha,
 	}
 	resp, err := request.Request("DELETE", g.Api(path), crypto.JsonEncode(param))
-	Log().Info("Git Delete ", "resp ", resp, "err ", err)
 	if err != nil {
 		return err
 	}
@@ -88,15 +82,36 @@ func (g *Git) Delete(path string) error {
 // Sha ...
 func (g *Git) Sha(path string) string {
 	resp, _ := g.Get(path)
-	return ljson.Json(resp).Key("sha").ToString()
+	return j.Json(resp).Key("sha").ToString()
 }
 
 // Api ...
 func (g *Git) Api(path string) string {
-	return fmt.Sprintf(gitApiUrl, g.Owner, g.Repo, path, g.AccessToken)
+	return fmt.Sprintf(configs.GitApiUrl, g.Owner, g.Repo, path, g.AccessToken)
 }
 
 // Url ...
 func (g *Git) Url(path string) string {
-	return fmt.Sprintf(gitFileUrl, g.Owner, g.Repo, path)
+	return fmt.Sprintf(configs.GitFileUrl, g.Owner, g.Repo, path)
+}
+
+// LastVersion ...
+func (g *Git) LastVersion() string {
+	url := fmt.Sprintf(configs.GitTagUrl, g.Owner, g.Repo)
+	resp, err := request.Get(url)
+	if err != nil {
+		return ""
+	}
+	return j.Json(resp).Index(0).Key("name").ToString()
+}
+
+// UploadFileList ...
+func (g *Git) UploadFileList() []map[string]string {
+	resp, _ := g.Get(configs.GitDBFile)
+	list := []map[string]string{}
+	if resp != "" {
+		content := crypto.Base64Decode(j.Json(resp).Key("content").ToString())
+		json.Unmarshal([]byte(content), &list)
+	}
+	return list
 }

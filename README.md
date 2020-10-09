@@ -1,11 +1,11 @@
 <div align="center">
 <img src="./appicon.png" width="200" alt="cantor" align=center />
 
-
 [![goreportcard](https://goreportcard.com/badge/github.com/evercyan/cantor)](https://goreportcard.com/report/github.com/evercyan/cantor)
-[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 
-基于 [wails](https://github.com/wailsapp/wails) + vue + [github-api](https://docs.github.com/cn/rest/reference/repos#contents) 实现的个人图床 mac app [点我下载](https://github.com/evercyan/cantor/releases/download/v0.0.3/cantor-v0.0.3.tar.gz)
+基于 [wails](https://github.com/wailsapp/wails) + vue + [github-api](https://docs.github.com/cn/rest/reference/repos#contents) 实现的个人图床 mac app
+
+[点我下载 Cantor-v0.0.4.dmg](https://github.com/evercyan/cantor/releases/download/v0.0.4/Cantor-v0.0.4.dmg)
 </div>
 
 ---
@@ -29,7 +29,7 @@ Q: 使用步骤
 - 打开应用, 填写相关配置 (配置存储于 ~/.cantor/config.json 中)
 - 点击上传图片文件, 应用会通过 github api 将图片文件上传至配置的仓库中
 - 应用上传文件列表中, 可点击标题打开链接, 亦可直接复制链接
-- 上传文件列表的数据存储在 仓库名/resource/database.json 中
+- 上传文件列表的数据存储在 `仓库/resource/database.json`
 ```
 
 ```txt
@@ -43,9 +43,9 @@ Q: repo 目录说明
 
 ```txt
 Q: 其他 blabla..
-- 当前编译后 app 只支持 Mac 10.14+, 其他平台应用需下载源码, 自行编译
-- 应用日志位置在 /tmp/cantor.log
-- 上传图片最大 2M, 只支持 png gif jpg jpeg, 有需要可以下载源码自行编译
+- 当前 app 只支持 Mac 10.14+, 其他平台应用需下载源码, 自行编译
+- 应用日志位置在 ~/.cantor/cantor.log
+- 上传图片最大 2M, 只支持 png gif jpg jpeg, 有需要可以下载源码自行调整编译
 ```
 
 ---
@@ -84,10 +84,10 @@ sh run.sh debug
 ### 编译可执行文件和 app
 
 ```sh
-# 生成可执行文件 ./build/cantor
+# 生成可执行文件 ./build/Cantor
 sh run.sh test
 
-# 生成 mac app ./build/cantor.app
+# 生成 mac app ./build/Cantor.app
 sh run.sh build
 ```
 

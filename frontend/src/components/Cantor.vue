@@ -1,6 +1,6 @@
 <template>
   <el-container class="page-cantor" v-loading="loading" :style="areaStyle">
-    <el-aside class="side-area" style="width: 71px;">
+    <el-aside class="side-area" style="width: 71px">
       <el-menu @select="onSelect">
         <el-menu-item index="upload" title="上传">
           <i class="el-icon-upload"></i>
@@ -16,7 +16,7 @@
 
     <el-main class="main-area">
       <el-table
-        :data="list.slice((page.num-1)*page.size, page.num*page.size)"
+        :data="list.slice((page.num - 1) * page.size, page.num * page.size)"
         :fit="true"
         stripe
         style="width: 100%"
@@ -35,11 +35,21 @@
         </el-table-column>
         <el-table-column label="名称">
           <template slot-scope="scope">
-            <el-link type="primary" @click="onLink(scope.row.file_url)">{{scope.row.file_name}}</el-link>
+            <el-link type="primary" @click="onLink(scope.row.file_url)">{{
+              scope.row.file_name
+            }}</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="file_size" label="大小" width="100"></el-table-column>
-        <el-table-column prop="create_at" label="时间" width="200"></el-table-column>
+        <el-table-column
+          prop="file_size"
+          label="大小"
+          width="100"
+        ></el-table-column>
+        <el-table-column
+          prop="create_at"
+          label="时间"
+          width="200"
+        ></el-table-column>
         <el-table-column label="操作" width="100">
           <template slot-scope="scope">
             <el-button
@@ -70,7 +80,12 @@
         v-if="list.length > 0"
       ></el-pagination>
 
-      <el-drawer :with-header="false" :visible.sync="drawerConfig" size="39%" class="config-area">
+      <el-drawer
+        :with-header="false"
+        :visible.sync="drawerConfig"
+        size="39%"
+        class="config-area"
+      >
         <el-form ref="form" :model="config" :rules="rules" label-width="60px">
           <el-form-item label="仓库" prop="repo">
             <el-input v-model="config.repo" placeholder="cantor"></el-input>
@@ -79,7 +94,10 @@
             <el-input v-model="config.owner" placeholder="evercyan"></el-input>
           </el-form-item>
           <el-form-item label="邮箱" prop="email">
-            <el-input v-model="config.email" placeholder="evercyan@qq.com"></el-input>
+            <el-input
+              v-model="config.email"
+              placeholder="evercyan@qq.com"
+            ></el-input>
           </el-form-item>
           <el-form-item label="私钥" prop="access_token">
             <el-input v-model="config.access_token"></el-input>
@@ -88,25 +106,53 @@
               type="info"
               :underline="false"
               icon="el-icon-info"
-            >申请 github 私钥</el-link>
+              >申请 github 私钥</el-link
+            >
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSetting" :loading="loading">设置</el-button>
-            <el-button type="danger" @click="drawerConfig = false;">取消</el-button>
+            <el-button type="primary" @click="onSetting" :loading="loading"
+              >设置</el-button
+            >
+            <el-button type="danger" @click="drawerConfig = false"
+              >取消</el-button
+            >
           </el-form-item>
         </el-form>
       </el-drawer>
 
-      <el-drawer :with-header="false" :visible.sync="drawerAbout" size="39%" class="about-area">
+      <el-drawer
+        :with-header="false"
+        :visible.sync="drawerAbout"
+        size="39%"
+        class="about-area"
+      >
         <img src="@/assets/images/logo.png" class="logo" />
         <div>
-          <el-link @click="onLink('https://github.com/evercyan/cantor')" type="primary">Cantor v0.03</el-link>
+          <el-link
+            @click="onLink('https://github.com/evercyan/cantor')"
+            type="primary"
+          >
+            Cantor {{ version.current }}
+          </el-link>
+          <br />
+          <el-link
+            @click="onLink(version.link)"
+            type="danger"
+            v-if="version.current < version.last"
+          >
+            升级 {{ version.last }}
+          </el-link>
         </div>
         <el-divider></el-divider>
-        <el-steps :active="3" finish-status="process" direction="vertical" class="step-area">
-          <el-step title="配置" description="github 相关配置"></el-step>
-          <el-step title="上传" description="左侧按钮上传文件到 repo"></el-step>
-          <el-step title="链接" description="点击打开浏览器打开文件或复制链接"></el-step>
+        <el-steps
+          :active="3"
+          finish-status="process"
+          direction="vertical"
+          class="step-area"
+        >
+          <el-step title="配置" description="github 配置"></el-step>
+          <el-step title="上传" description="点击上传文件到 repo"></el-step>
+          <el-step title="使用" description="复制或打开链接"></el-step>
         </el-steps>
       </el-drawer>
     </el-main>
@@ -118,6 +164,11 @@ export default {
   name: "page-cantor",
   data() {
     return {
+      version: {
+        current: "",
+        last: "",
+        link: "",
+      },
       areaStyle: {
         height: "",
       },
@@ -151,50 +202,51 @@ export default {
   },
   watch: {
     list(list) {
-      var _this = this;
       var fileUrlList = [];
       for (var i = 0; i < list.length; i++) {
         if (fileUrlList.indexOf(list[i].file_url) === -1) {
           fileUrlList.push(list[i].file_url);
         }
       }
-      _this.fileUrlList = fileUrlList;
+      this.fileUrlList = fileUrlList;
     },
   },
   mounted() {
-    var _this = this;
     // 重置 area 高度
-    window.addEventListener("resize", _this.refreshAreaHeight);
-    _this.refreshAreaHeight();
-    _this.configInit();
-    _this.listInit();
+    window.addEventListener("resize", this.refreshAreaHeight);
+    this.refreshAreaHeight();
+    this.configInit();
+    this.listInit();
   },
   methods: {
     configInit: function () {
-      var _this = this;
-      _this.wails("GetConfig", "", function (result) {
-        _this.config = result;
-        if (_this.config.repo == "") {
-          _this.drawerConfig = true;
+      window.backend.App.GetConfig().then((resp) => {
+        console.log("GetConfig", resp);
+        this.config = resp.data.config;
+        if (this.config.repo == "") {
+          this.drawerConfig = true;
         }
+        this.version = resp.data.version;
+        this.version.link =
+          "https://github.com/evercyan/cantor/releases/download/" +
+          this.version.last +
+          "/Cantor-" +
+          this.version.last +
+          ".dmg";
       });
     },
     listInit: function () {
-      var _this = this;
-      _this.loading = true;
-      _this.wails(
-        "GetUploadList",
-        "",
-        function (result) {
-          _this.loading = false;
-          _this.list = result;
-          _this.pageInit();
-        },
-        function (error) {
-          _this.loading = false;
-          _this.$message.error(error);
+      this.loading = true;
+      window.backend.App.GetUploadList().then((resp) => {
+        console.log("GetUploadList", resp);
+        this.loading = false;
+        if (resp.code != 0) {
+          this.$message.error(resp.message);
+          return;
         }
-      );
+        this.list = resp.data;
+        this.pageInit();
+      });
     },
     pageInit: function () {
       this.page.total = this.list.length;
@@ -204,79 +256,63 @@ export default {
       this.areaStyle.height = window.innerHeight + "px";
     },
     onSelect: function (action) {
-      var _this = this;
-      console.log("onSelect", "action", action);
       if (action == "setting") {
-        _this.drawerConfig = true;
+        this.drawerConfig = true;
         return;
       }
-
       if (action == "about") {
-        _this.drawerAbout = true;
+        this.drawerAbout = true;
         return;
       }
-
       if (action == "upload") {
-        _this.loading = true;
-        _this.wails(
-          "UploadFile",
-          "",
-          function (result) {
-            console.log("UploadFile result", result);
-            _this.loading = false;
-            _this.$message.success("上传成功");
-            _this.listInit();
-          },
-          function (error) {
-            _this.loading = false;
-            _this.$message.error(error);
+        this.loading = true;
+        window.backend.App.UploadFile().then((resp) => {
+          console.log("UploadFile", resp);
+          this.loading = false;
+          if (resp.code != 0) {
+            this.$message.error(resp.message);
+            return;
           }
-        );
-        return;
+          this.$message.success(resp.data);
+          this.listInit();
+        });
       }
     },
     onSetting: function () {
-      var _this = this;
-      _this.$refs["form"].validate((valid) => {
-        if (valid) {
-          _this.loading = true;
-          _this.wails(
-            "SetConfig",
-            JSON.stringify(_this.config),
-            function (result) {
-              _this.loading = false;
-              _this.$message.success(result);
-              _this.drawerConfig = false;
-              _this.listInit();
-            },
-            function (error) {
-              _this.loading = false;
-              _this.$message.error(error);
-            }
-          );
+      this.$refs["form"].validate((valid) => {
+        if (!valid) {
+          return;
         }
+        this.loading = true;
+        window.backend.App.SetConfig(JSON.stringify(this.config)).then(
+          (resp) => {
+            console.log("SetConfig", resp);
+            this.loading = false;
+            if (resp.code != 0) {
+              this.$message.error(resp.message);
+              return;
+            }
+            this.$message.success(resp.data);
+            this.drawerConfig = false;
+            this.listInit();
+          }
+        );
       });
     },
     onDelete: function (filePath) {
-      var _this = this;
-      _this
-        .$confirm("是否确认删除?", "", { type: "warning" })
+      this.$confirm("是否确认删除?", "", { type: "warning" })
         .then(() => {
-          _this.loading = true;
-          _this.wails(
-            "DeleteFile",
-            filePath,
-            function (result) {
-              console.log("UploadFile result", result);
-              _this.loading = false;
-              _this.$message.success("删除成功");
-              _this.listInit();
-            },
-            function (error) {
-              _this.loading = false;
-              _this.$message.error(error);
+          this.loading = true;
+          window.backend.App.DeleteFile(filePath).then((resp) => {
+            console.log("DeleteFile", resp);
+            this.loading = false;
+            if (resp.code != 0) {
+              this.$message.error(resp.message);
+              return;
             }
-          );
+            this.$message.success(resp.data);
+            this.listInit();
+          });
         })
         .catch(() => {});
     },
@@ -284,17 +320,14 @@ export default {
       window.wails.Browser.OpenURL(fileUrl);
     },
     onCopy: function (fileUrl) {
-      var _this = this;
-      _this.wails(
-        "CopyFileUrl",
-        fileUrl,
-        function (result) {
-          _this.$message.success(result);
-        },
-        function (error) {
-          _this.$message.error(error);
+      window.backend.App.CopyFileUrl(fileUrl).then((resp) => {
+        console.log("CopyFileUrl", resp);
+        if (resp.code != 0) {
+          this.$message.error(resp.message);
+          return;
         }
-      );
+        this.$message.success(resp.data);
+      });
     },
   },
 };
