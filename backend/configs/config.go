@@ -4,7 +4,7 @@ const (
 	// AppName 应用名称
 	AppName = "cantor"
 	// Version 应用版本
-	Version = "v0.0.4"
+	Version = "v0.0.5"
 )
 
 var (
