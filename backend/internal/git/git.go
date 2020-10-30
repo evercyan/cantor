@@ -97,8 +97,7 @@ func (g *Git) Url(path string) string {
 
 // LastVersion ...
 func (g *Git) LastVersion() string {
-	url := fmt.Sprintf(configs.GitTagUrl, g.Owner, g.Repo)
-	resp, err := request.Get(url)
+	resp, err := request.Get(configs.GitTagUrl)
 	if err != nil {
 		return ""
 	}
