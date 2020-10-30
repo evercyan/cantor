@@ -169,3 +169,19 @@ func (a *App) CopyFileUrl(fileUrl string) *configs.Resp {
 	}
 	return tools.Success("已复制到粘贴板")
 }
+
+// UpdateFileName 更新文件名称
+func (a *App) UpdateFileName(filePath string, fileName string) *configs.Resp {
+	list := a.Git.UploadFileList()
+	for i := 0; i < len(list); i++ {
+		if list[i]["file_path"] == filePath {
+			list[i]["file_name"] = fileName
+		}
+	}
+	// 更新数据文件
+	updateErr := a.Git.Update(configs.GitDBFile, crypto.JsonEncode(list))
+	if updateErr != nil {
+		return tools.Fail(updateErr.Error())
+	}
+	return tools.Success("操作成功")
+}

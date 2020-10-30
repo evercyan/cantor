@@ -16,6 +16,7 @@
 
     <el-main class="main-area">
       <el-table
+        :key="tableKey"
         :data="list.slice((page.num - 1) * page.size, page.num * page.size)"
         :fit="true"
         stripe
@@ -33,11 +34,23 @@
             </el-image>
           </template>
         </el-table-column>
-        <el-table-column label="名称">
+        <el-table-column label="名称" prop="file_name">
           <template slot-scope="scope">
-            <el-link type="primary" @click="onLink(scope.row.file_url)">{{
-              scope.row.file_name
-            }}</el-link>
+            <span v-if="scope.row.is_edit">
+              <el-input
+                maxlength="50"
+                placeholder="请输入标题"
+                show-word-limit
+                ref="file_name"
+                v-model="scope.row.file_name"
+                style="width: 100%"
+                @blur="onUpdateData(scope.$index, scope.row)"
+              >
+              </el-input>
+            </span>
+            <span @dblclick="onEditData(scope.$index, scope.row)" v-else>
+              {{ scope.row.file_name }}
+            </span>
           </template>
         </el-table-column>
         <el-table-column
@@ -164,6 +177,8 @@ export default {
   name: "page-cantor",
   data() {
     return {
+      tableKey: 0,
+      editFileName: "",
       version: {
         current: "",
         last: "",
@@ -245,6 +260,9 @@ export default {
           return;
         }
         this.list = resp.data;
+        // for (let i = 0; i < this.list.length; i++) {
+        //   this.list[i].is_edit = false;
+        // }
         this.pageInit();
       });
     },
@@ -328,6 +346,44 @@ export default {
         }
         this.$message.success(resp.data);
       });
+    },
+    onEditData(index, row) {
+      console.log("onEditData", index, row);
+      row.is_edit = true;
+      this.editFileName = row.file_name;
+      this.refreshTableKey();
+
+      setTimeout(() => {
+        this.$refs["file_name"].focus();
+      }, 20);
+    },
+    onUpdateData(index, row) {
+      console.log("onUpdateData", index, row);
+      if (row.file_name === "") {
+        this.$message.error("标题不能为空");
+        row.file_name = this.editFileName;
+        return;
+      }
+      row.is_edit = false;
+      this.refreshTableKey();
+      if (this.editFileName == row.file_name) {
+        return;
+      }
+      this.loading = true;
+      window.backend.App.UpdateFileName(row.file_path, row.file_name).then(
+        (resp) => {
+          console.log("DeleteFile", resp);
+          this.loading = false;
+          if (resp.code != 0) {
+            this.$message.error(resp.message);
+            return;
+          }
+          this.$message.success(resp.data);
+        }
+      );
+    },
+    refreshTableKey() {
+      this.tableKey = new Date().getTime();
     },
   },
 };
