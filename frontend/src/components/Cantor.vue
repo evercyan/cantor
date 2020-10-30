@@ -34,12 +34,18 @@
             </el-image>
           </template>
         </el-table-column>
-        <el-table-column label="名称" prop="file_name">
+        <el-table-column
+          label="名称"
+          prop="file_name"
+          :render-header="
+            (h, data) => renderHeader(h, data, '双击文件名称进行编辑')
+          "
+        >
           <template slot-scope="scope">
             <span v-if="scope.row.is_edit">
               <el-input
                 maxlength="50"
-                placeholder="请输入标题"
+                placeholder="请输入名称"
                 show-word-limit
                 ref="file_name"
                 v-model="scope.row.file_name"
@@ -360,7 +366,7 @@ export default {
     onUpdateData(index, row) {
       console.log("onUpdateData", index, row);
       if (row.file_name === "") {
-        this.$message.error("标题不能为空");
+        this.$message.error("文件名称不能为空");
         row.file_name = this.editFileName;
         return;
       }
@@ -384,6 +390,25 @@ export default {
     },
     refreshTableKey() {
       this.tableKey = new Date().getTime();
+    },
+    renderHeader(h, { column }, notice) {
+      return (
+        <span>
+          {notice ? (
+            <el-tooltip effect="dark" content={notice} placement="top-start">
+              <span>
+                {column.label}&nbsp;
+                <i
+                  class="el-icon-info"
+                  style="color:#409eff;margin-left:5px;"
+                ></i>
+              </span>
+            </el-tooltip>
+          ) : (
+            <span> {column.label} </span>
+          )}
+        </span>
+      );
     },
   },
 };

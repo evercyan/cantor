@@ -172,6 +172,7 @@ func (a *App) CopyFileUrl(fileUrl string) *configs.Resp {
 
 // UpdateFileName 更新文件名称
 func (a *App) UpdateFileName(filePath string, fileName string) *configs.Resp {
+	a.Log.Info("UpdateFileName filePath: ", filePath, "fileName: ", fileName)
 	list := a.Git.UploadFileList()
 	for i := 0; i < len(list); i++ {
 		if list[i]["file_path"] == filePath {
