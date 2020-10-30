@@ -95,8 +95,8 @@ sh run.sh build
 
 ## Snapshot
 
-![cantor-1](https://raw.githubusercontent.com/evercyan/cantor/master/resource/05/056c664b8e2e3e0aab59d628daf387e4.png)
+![cantor-1](https://raw.githubusercontent.com/evercyan/cantor/master/resource/5f/5f7613ca3ffd75d866793b2850d060c5.png)
 
-![cantor-2](https://raw.githubusercontent.com/evercyan/cantor/master/resource/8d/8d780f58628132e3192a92cd41d8aded.png)
+![cantor-2](https://raw.githubusercontent.com/evercyan/cantor/master/resource/7d/7dad90aab2a5d83c1c7c28820986f802.png)
 
-![cantor-3](https://raw.githubusercontent.com/evercyan/cantor/master/resource/40/4012c0f7b373896f3781e03336e719ac.png)
+![cantor-3](https://raw.githubusercontent.com/evercyan/cantor/master/resource/76/76944dc752271dfe5dd64f4866c1d39b.png)
