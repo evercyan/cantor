@@ -5,7 +5,7 @@
 
 基于 [wails](https://github.com/wailsapp/wails) + vue + [github-api](https://docs.github.com/cn/rest/reference/repos#contents) 实现的个人图床 mac app
 
-[点我下载 Cantor-v0.0.4.dmg](https://github.com/evercyan/cantor/releases/download/v0.0.4/Cantor-v0.0.4.dmg)
+[点我下载 Cantor-v0.0.5.dmg](https://github.com/evercyan/cantor/releases/download/v0.0.5/Cantor-v0.0.5.dmg)
 </div>
 
 ---

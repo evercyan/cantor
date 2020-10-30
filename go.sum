@@ -14,10 +14,13 @@ github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/dgrijalva/jwt-go v3.2.0+incompatible h1:7qlOGliEKZXTDg6OTjfoBKDXWrumCAMpl/TFQ4/5kLM=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible/go.mod h1:E3ru+11k8xSBh+hMPgOLZmtrrCbhqsmaPHjLKYnJCaQ=
 github.com/evercyan/cantor v0.0.3 h1:FtUsQHAI2F4XO5cDJJ6qnJbWNyM2BuKwdyHaBDjirnM=
+github.com/evercyan/gocli v0.0.2/go.mod h1:jkOFfJb0vov/FJjNVhoZ08yDI62SsKL/n1KZUCU7d/E=
 github.com/evercyan/letitgo v0.0.1 h1:c07tdYqZxKTZO5h80BY8tKyQ5q6suwzCsYrhJUrnlpg=
 github.com/evercyan/letitgo v0.0.1/go.mod h1:w2l132sbFv6kS5a1wF4udGTcVQ/G9NVPhWyGgrYx3GI=
 github.com/evercyan/letitgo v0.0.2 h1:X1cOhV+MR/mZVB5bZuMmIG30W48O3H+tMwO7okJqoXs=
 github.com/evercyan/letitgo v0.0.2/go.mod h1:w2l132sbFv6kS5a1wF4udGTcVQ/G9NVPhWyGgrYx3GI=
+github.com/evercyan/letitgo v0.0.4 h1:eidJOSA15i5INHftc7JYkahRiHIC07N9YpaFm+VYVRE=
+github.com/evercyan/letitgo v0.0.4/go.mod h1:HOIYmzUtt5T+vc+Ve0LIPskZJRmpTerxmjrsnskzs00=
 github.com/fatih/color v1.7.0 h1:DkWD4oS2D8LGGgTQ6IvwJJXSL5Vp2ffcQg58nFV38Ys=
 github.com/fatih/color v1.7.0/go.mod h1:Zm6kSWBoL9eyXnKyktHP6abPY2pDugNf5KwzbycvMj4=
 github.com/go-playground/colors v1.2.0 h1:0EdjTXKrr2g1L/LQTYtIqabeHpZuGZz1U4osS1T8+5M=

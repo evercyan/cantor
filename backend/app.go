@@ -12,6 +12,7 @@ import (
 	"github.com/evercyan/cantor/backend/internal/git"
 	"github.com/evercyan/cantor/backend/tools"
 	"github.com/evercyan/letitgo/crypto"
+	"github.com/evercyan/letitgo/file"
 	"github.com/evercyan/letitgo/util"
 	"github.com/sirupsen/logrus"
 	"github.com/wailsapp/wails"
@@ -44,7 +45,7 @@ func (a *App) WailsShutdown() {
 func (a *App) InitConfig() {
 	a.Config = tools.GetConfigPath() + "/config.json"
 	a.Log.Info("InitConfig config: ", a.Config)
-	content := util.ReadFile(a.Config)
+	content := file.Read(a.Config)
 	a.Log.Info("InitConfig content: ", content)
 	if content == "" {
 		return
@@ -71,7 +72,7 @@ func (a *App) SetConfig(content string) *configs.Resp {
 	if err := json.Unmarshal([]byte(content), &a.Git); err != nil {
 		return tools.Fail(err.Error())
 	}
-	if err := util.WriteFile(a.Config, content); err != nil {
+	if err := file.Write(a.Config, content); err != nil {
 		return tools.Fail(err.Error())
 	}
 	return tools.Success("操作成功")
@@ -100,13 +101,13 @@ func (a *App) UploadFile() *configs.Resp {
 	}
 
 	// 文件大小校验
-	fileSize := util.GetSize(selectFile)
+	fileSize := file.Size(selectFile)
 	if fileSize > configs.MaxFileSize {
 		return tools.Fail("最大支持 2M 的文件")
 	}
 
 	// 文件内容
-	fileContent := util.ReadFile(selectFile)
+	fileContent := file.Read(selectFile)
 	// 文件路径名称
 	fileMd5 := util.Md5(fileContent)
 	filePath := fmt.Sprintf(configs.GitFilePath, fileMd5[0:2], fileMd5, fileExt)
@@ -120,7 +121,7 @@ func (a *App) UploadFile() *configs.Resp {
 	fileInfo := map[string]string{
 		"file_name": path.Base(selectFile),
 		"file_md5":  fileMd5,
-		"file_size": util.GetSizeText(fileSize),
+		"file_size": file.SizeText(fileSize),
 		"file_path": filePath,
 		"file_url":  a.Git.Url(filePath),
 		"create_at": time.Now().Format("2006-01-02 15:04:05"),
@@ -168,4 +169,21 @@ func (a *App) CopyFileUrl(fileUrl string) *configs.Resp {
 		return tools.Fail(err.Error())
 	}
 	return tools.Success("已复制到粘贴板")
+}
+
+// UpdateFileName 更新文件名称
+func (a *App) UpdateFileName(filePath string, fileName string) *configs.Resp {
+	a.Log.Info("UpdateFileName filePath: ", filePath, "fileName: ", fileName)
+	list := a.Git.UploadFileList()
+	for i := 0; i < len(list); i++ {
+		if list[i]["file_path"] == filePath {
+			list[i]["file_name"] = fileName
+		}
+	}
+	// 更新数据文件
+	updateErr := a.Git.Update(configs.GitDBFile, crypto.JsonEncode(list))
+	if updateErr != nil {
+		return tools.Fail(updateErr.Error())
+	}
+	return tools.Success("操作成功")
 }
