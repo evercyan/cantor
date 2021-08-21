@@ -2,6 +2,20 @@
   margin: 0;
   padding: 0;
   list-style: none;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input {
+  -webkit-user-select: auto;
+}
+
+textarea {
+  -webkit-user-select: auto;
 }
 
 body {
@@ -14,50 +28,83 @@ body {
 }
 
 .page-cantor {
+
   .side-area {
     background-color: #18181f;
+
     .el-menu {
-      background-color:#18181f;
+      background-color: #18181f;
       border-right: 0;
+      margin-top: 20px;
+
       .el-menu-item i {
         color: #f1f1f1;
         font-size: 30px;
       }
+
       .el-menu-item i:hover {
         color: #27ffa7;
       }
+
       .el-menu-item.is-active {
-        background-color:#18181f;
+        background-color: #18181f;
       }
-      .el-menu-item:hover{
-        background-color:#18181f !important;
+
+      .el-menu-item:hover {
+        background-color: #18181f !important;
+      }
+
+      .logo {
+        width: 50px;
+        position: relative;
+        left: -10px;
       }
     }
   }
+
   .main-area {
-    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+
+    .main-table-area {
+      flex: 1;
+    }
+
+    .main-page-area {
+      flex: 0;
+    }
+
     .el-image {
       width: 50px;
       max-height: 50px;
+      border: 1px solid #bbbcbf;
     }
+
     .image-slot {
-        font-size: 22px;
+      font-size: 22px;
     }
+
     .el-pagination {
       margin-top: 10px;
     }
+
     .el-drawer {
       padding: 20px;
     }
+
     .about-area {
-        text-align: center;
-        .step-area {
-          height: 200px;
-        }
-        .logo {
-          width: 200px;
-        }
+      text-align: center;
+
+      .step-area {
+        height: 200px;
+      }
+
+      .logo {
+        width: 200px;
+      }
     }
+
     .config-area .el-link--inner {
       font-size: 10px;
     }

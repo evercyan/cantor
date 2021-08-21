@@ -1,18 +1,23 @@
 package main
 
 import (
-	"github.com/evercyan/cantor/backend"
+	_ "embed"
 
-	"github.com/leaanthony/mewn"
 	"github.com/wailsapp/wails"
+
+	"github.com/evercyan/cantor/backend"
 )
 
+//go:embed frontend/dist/app.js
+var js string
+
+//go:embed frontend/dist/app.css
+var css string
+
 func main() {
-	js := mewn.String("./frontend/dist/app.js")
-	css := mewn.String("./frontend/dist/app.css")
 	app := wails.CreateApp(&wails.AppConfig{
-		Width:            800,
-		Height:           600,
+		Width:            888,
+		Height:           666,
 		Resizable:        true,
 		Title:            "Cantor",
 		JS:               js,
@@ -20,6 +25,6 @@ func main() {
 		Colour:           "#18181f",
 		DisableInspector: true,
 	})
-	app.Bind(&backend.App{})
+	app.Bind(new(backend.App))
 	app.Run()
 }

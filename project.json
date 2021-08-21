@@ -5,7 +5,7 @@
         "name": "evercyan",
         "email": "evercyan@qq.com"
     },
-    "version": "v0.0.5",
+    "version": "v0.0.6",
     "binaryname": "Cantor",
     "frontend": {
         "dir": "frontend",
@@ -14,7 +14,7 @@
         "bridge": "src",
         "serve": "npm run serve"
     },
-    "WailsVersion": "",
+    "WailsVersion": "v.1.16.6",
     "CrossCompile": false,
     "Platform": "",
     "Architecture": "",

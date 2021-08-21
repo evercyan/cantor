@@ -3,100 +3,56 @@
 
 [![goreportcard](https://goreportcard.com/badge/github.com/evercyan/cantor)](https://goreportcard.com/report/github.com/evercyan/cantor)
 
-基于 [wails](https://github.com/wailsapp/wails) + vue + [github-api](https://docs.github.com/cn/rest/reference/repos#contents) 实现的个人图床 mac app
+基于 [wails](https://github.com/wailsapp/wails) + [vue](https://cn.vuejs.org/) + [github-api](https://docs.github.com/cn/rest/reference/repos#contents) 实现的个人图床 mac app
 
-[点我下载 Cantor-v0.0.5.dmg](https://github.com/evercyan/cantor/releases/download/v0.0.5/Cantor-v0.0.5.dmg)
+[点我下载 Cantor-v0.0.6.dmg](https://github.com/evercyan/cantor/releases/download/v0.0.6/Cantor-v0.0.6.dmg)
 </div>
 
 ---
 
-## 必读 QA
+## QA
 
-```txt
-Q: what's cantor?
-A: it means "康托尔集", 意指图床
-```
+- Cantor 名字由来
+  - 有一位数学家名叫 Georg Cantor
+  - 他的成就之一就是集合论
+  - Cantor, 意指 "康托尔集", 实指 "图床"
 
-```txt
-Q: 使用应用前准备工作
-A: 在 github 新建仓库和申请 access_token
-```
 
-[申请 access_token](https://github.com/settings/tokens)
+- 使用应用前的准备工作
+  - 自己的 GitHub 账号, e.g. `evercyan`
+  - 自己的邮箱(commit 使用), e.g. `evercyan@qq.com`
+  - 新建一个 GitHub 仓库, e.g. `evercyan/repository`
+  - 申请 GitHub access_token [点击申请](https://github.com/settings/tokens)
 
-```txt
-Q: 使用步骤
-- 打开应用, 填写相关配置 (配置存储于 ~/.cantor/config.json 中)
-- 点击上传图片文件, 应用会通过 github api 将图片文件上传至配置的仓库中
-- 应用上传文件列表中, 可点击标题打开链接, 亦可直接复制链接
-- 上传文件列表的数据存储在 `仓库/resource/database.json`
-```
+  
+- 如何使用应用
+  - 打开应用
+  - 设置 GihHub 配置
+  ```
+  未配置时, 会自动打开配置窗口
+  后面可以通过点击设置按钮触发
+  配置存储于 `~/.cantor/config.json`
+  ```
+  - 上传图片
+  ```text
+  点击左侧上传按钮, 选择图片文件进行添加
+  应用会通过 GitHub Api 将图片文件上传至配置中的仓库
+  同时会写入本地数据库 ~/.cantor/cantor.db
+  并同步 cantor.db 到 仓库/resource/cantor.db
+  ```
 
-```txt
-Q: repo 目录说明
-|____resource           图床资源目录
-| |____database.json    上传文件记录
-|____backend            后端代码目录  
-|____frontend           前端代码目录
-|____assets             个人资源目录
-```
-
-```txt
-Q: 其他 blabla..
-- 当前 app 只支持 Mac 10.14+, 其他平台应用需下载源码, 自行编译
-- 应用日志位置在 ~/.cantor/cantor.log
-- 上传图片最大 2M, 只支持 png gif jpg jpeg, 有需要可以下载源码自行调整编译
-```
-
----
-
-## DIY
-
-### 准备工作
-
-```sh
-# 安装 wails
-go get -u github.com/wailsapp/wails/cmd/wails
-wails -help
-
-# 下载 cantor
-git clone https://github.com/evercyan/cantor
-# 本 repo 下 resource, assets 均是个人的资源存储, 和项目无关
-```
-
-### 浏览器调试
-
-```sh
-# 安装前端组件
-cd ./cantor/frontend/
-npm install
-# 启动前端服务
-npm run serve
-
-# 启动后端服务
-cd ./cantor/
-sh run.sh debug
-
-# 打开 http://127.0.0.1:8080/
-# 浏览器调试模式下, 不支持上传文件(需要调用系统文件选择功能), 其余功能正常
-```
-
-### 编译可执行文件和 app
-
-```sh
-# 生成可执行文件 ./build/Cantor
-sh run.sh test
-
-# 生成 mac app ./build/Cantor.app
-sh run.sh build
-```
+- blabla...
+  - app 实测支持 Mac 10.14+, 其他平台需自行下载源码编译
+  - 应用日志存储于 ~/.cantor/app.log
+  - 上传图片大小最大为 2M
+  - 上传图片格式只支持 png gif jpg jpeg
 
 ---
 
 ## Snapshot
 
-![cantor-1](https://raw.githubusercontent.com/evercyan/cantor/master/resource/5f/5f7613ca3ffd75d866793b2850d060c5.png)
+![cantor-1](https://cdn.jsdelivr.net/gh/evercyan/repository/resource/76/763cda4bd4b0e2fd359799311383cf65.png)
 
-![cantor-2](https://raw.githubusercontent.com/evercyan/cantor/master/resource/7d/7dad90aab2a5d83c1c7c28820986f802.png)
+![cantor-2](https://cdn.jsdelivr.net/gh/evercyan/repository/resource/43/431c46df6fc2171e08d6fbfa174d6562.png)
 
-![cantor-3](https://raw.githubusercontent.com/evercyan/cantor/master/resource/76/76944dc752271dfe5dd64f4866c1d39b.png)
+![cantor-3](https://cdn.jsdelivr.net/gh/evercyan/repository/resource/d7/d77e72f7234e37c3c5906023a541fb71.png)
