@@ -1,14 +1,15 @@
 package pkg
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
-
-	"github.com/evercyan/letitgo/crypto"
-	"github.com/evercyan/letitgo/json"
-	"github.com/evercyan/letitgo/request"
+	"io/ioutil"
+	"net/http"
 
 	"github.com/evercyan/cantor/backend/cfg"
+	"github.com/evercyan/letitgo/crypto"
+	"github.com/evercyan/letitgo/json"
 )
 
 // Git git 配置
@@ -23,8 +24,7 @@ type Git struct {
 
 // Get 获取文件
 func (g *Git) Get(path string) (string, error) {
-	url := fmt.Sprintf(cfg.GitApiUrl, g.Owner, g.Repo, path, g.AccessToken)
-	resp, err := request.Get(url)
+	resp, err := g.request("GET", g.getApi(path), "")
 	if err != nil {
 		return "", err
 	}
@@ -46,7 +46,7 @@ func (g *Git) Update(path string, content string) error {
 	if sha != "" {
 		param["sha"] = sha
 	}
-	resp, err := request.Request("PUT", g.getApi(path), crypto.JsonEncode(param))
+	resp, err := g.request("PUT", g.getApi(path), crypto.JsonEncode(param))
 	if err != nil {
 		return err
 	}
@@ -64,7 +64,7 @@ func (g *Git) Delete(path string) error {
 		"message": cfg.GitMessage,
 		"sha":     sha,
 	}
-	resp, err := request.Request("DELETE", g.getApi(path), crypto.JsonEncode(param))
+	resp, err := g.request("DELETE", g.getApi(path), crypto.JsonEncode(param))
 	if err != nil {
 		return err
 	}
@@ -82,7 +82,7 @@ func (g *Git) getSha(path string) string {
 
 // getApi ...
 func (g *Git) getApi(path string) string {
-	return fmt.Sprintf(cfg.GitApiUrl, g.Owner, g.Repo, path, g.AccessToken)
+	return fmt.Sprintf(cfg.GitApiUrl, g.Owner, g.Repo, path)
 }
 
 // getResp ...
@@ -94,6 +94,24 @@ func (g *Git) getResp(resp string) (string, error) {
 	return resp, nil
 }
 
+// request ...
+func (g *Git) request(method string, url string, data string) (string, error) {
+	body := bytes.NewReader([]byte(data))
+	req, err := http.NewRequest(method, url, body)
+	if err != nil {
+		return "", err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", fmt.Sprintf("token %s", g.AccessToken))
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+	b, err := ioutil.ReadAll(resp.Body)
+	return string(b), err
+}
+
 // ----------------------------------------------------------------
 
 // GetFileUrl 获取文件链接
@@ -103,7 +121,7 @@ func (g *Git) GetFileUrl(path string) string {
 
 // GetLastVersion 获取应用最后版本号
 func (g *Git) GetLastVersion() string {
-	resp, err := request.Get(cfg.GitTagUrl)
+	resp, err := g.request("GET", cfg.GitTagUrl, "")
 	if err != nil {
 		return ""
 	}

@@ -14,7 +14,7 @@ var (
 
 // Git 配置
 var (
-	GitApiUrl   = "https://api.github.com/repos/%s/%s/contents/%s?access_token=%s"
+	GitApiUrl   = "https://api.github.com/repos/%s/%s/contents/%s"
 	GitTagUrl   = "https://api.github.com/repos/evercyan/cantor/tags"
 	GitFileUrl  = "https://cdn.jsdelivr.net/gh/%s/%s/%s"
 	GitDBFile   = "resource/cantor.db"

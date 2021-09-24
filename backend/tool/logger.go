@@ -7,10 +7,9 @@ import (
 	"os/user"
 	"sync"
 
+	"github.com/evercyan/cantor/backend/cfg"
 	"github.com/evercyan/letitgo/file"
 	"github.com/sirupsen/logrus"
-
-	"github.com/evercyan/cantor/backend/cfg"
 )
 
 var (

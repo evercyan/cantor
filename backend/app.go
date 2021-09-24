@@ -8,6 +8,9 @@ import (
 	"time"
 
 	"github.com/d-tsuji/clipboard"
+	"github.com/evercyan/cantor/backend/cfg"
+	"github.com/evercyan/cantor/backend/pkg"
+	"github.com/evercyan/cantor/backend/tool"
 	"github.com/evercyan/letitgo/crypto"
 	"github.com/evercyan/letitgo/file"
 	lj "github.com/evercyan/letitgo/json"
@@ -15,20 +18,14 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/wailsapp/wails"
 	"gorm.io/gorm"
-
-	"github.com/evercyan/cantor/backend/cfg"
-	"github.com/evercyan/cantor/backend/pkg"
-	"github.com/evercyan/cantor/backend/tool"
 )
 
 // App ...
 type App struct {
-	RT  *wails.Runtime
-	Log *logrus.Logger
-
-	Git *pkg.Git
-	DB  *gorm.DB
-
+	RT      *wails.Runtime
+	Log     *logrus.Logger
+	Git     *pkg.Git
+	DB      *gorm.DB
 	CfgFile string
 	DBFile  string
 }
