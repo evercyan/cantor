@@ -1,0 +1,21 @@
+{
+    "name": "Cantor",
+    "assetdir": "frontend/dist",
+    "frontend:build": "npm run build",
+    "frontend:install": "npm install",
+    "frontend:dev": "",
+    "wailsjsdir": "./frontend",
+    "version": "v0.1.0",
+    "Path": "",
+    "BuildDir": "",
+    "outputfilename": "Cantor",
+    "OutputType": "",
+    "Platform": "",
+    "Author": {
+        "name": "Ryan",
+        "email": "evercyan@qq.com"
+    },
+    "debounceMS": 100,
+    "devserverurl": "http://localhost:34115",
+    "appargs": ""
+}

@@ -1,9 +1,10 @@
-package pkg
+package internal
 
 import (
-	"github.com/evercyan/letitgo/file"
+	"github.com/evercyan/brick/xfile"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	gormLogger "gorm.io/gorm/logger"
 )
 
 // File ...
@@ -21,14 +22,14 @@ func (f *File) TableName() string {
 	return "file"
 }
 
-// ----------------------------------------------------------------
-
 // NewDB ...
 func NewDB(dbFilePath string) *gorm.DB {
-	isExist := file.IsExist(dbFilePath)
-	db, err := gorm.Open(sqlite.Open(dbFilePath), &gorm.Config{})
+	isExist := xfile.IsExist(dbFilePath)
+	db, err := gorm.Open(sqlite.Open(dbFilePath), &gorm.Config{
+		Logger: gormLogger.Discard,
+	})
 	if err != nil {
-		panic("failed to connect database")
+		panic("创建数据库失败")
 	}
 	if !isExist {
 		// db 文件在 open 前不存在时, 需要创建表
