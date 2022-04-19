@@ -19,11 +19,14 @@ bin/*
 .idea/
 .scannerwork/
 logs/
-build/
+build/bin
+build/darwin
 info.plist
 
 # frontend
 node_modules/
 dist/
 package.json.md5
+
+Cantor.dmg
 
