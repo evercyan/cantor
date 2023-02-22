@@ -9,7 +9,7 @@
 
 ---
 
-## Install
+## 安装
 
 [点击下载](https://github.com/evercyan/cantor/releases/download/v0.1.0/Cantor-v0.1.0.dmg) Mac Cantor-v0.1.0.dmg
 
@@ -17,16 +17,16 @@
 
 ---
 
-## Prepare
+## 准备
 
-- 有一个 GitHub 账号, e.g. `evercyan`
-- 有一个自己的邮箱, commit 时使用, e.g. `evercyan@qq.com`
-- 有一个仓库, e.g. `evercyan/repository`
+- GitHub 账号, e.g. `evercyan`
+- 邮箱, e.g. `evercyan@qq.com`
+- 仓库, e.g. `evercyan/repository`
 - 申请 GitHub access_token [点击申请](https://github.com/settings/tokens)
 
 ---
 
-## Usage
+## 使用
 
 - 打开应用
 
@@ -51,6 +51,6 @@ cantor upload ~/demo.png ~/demo1.png
 
 ---
 
-## Snapshot
+## 快照
 
 ![cantor](https://cdn.jsdelivr.net/gh/evercyan/repository/resource/1c/1c98042d7f58d999fdd080dc6bdf68aa.png)
