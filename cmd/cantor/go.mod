@@ -19,9 +19,9 @@ require (
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/wailsapp/wails/v2 v2.0.0-beta.32 // indirect
+	github.com/wailsapp/wails/v2 v2.3.1 // indirect
 	github.com/wenzhenxi/gorsa v0.0.0-20210524035706-528c7050d703 // indirect
-	golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
+	golang.org/x/sys v0.1.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gorm.io/driver/sqlite v1.2.6 // indirect
 	gorm.io/gorm v1.22.4 // indirect
