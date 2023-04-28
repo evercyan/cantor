@@ -45,6 +45,8 @@
 - 终端使用
 
     ```shell
+    # 需要安装应用并完成 GitHub 图床相关配置才可在终端使用
+  
     # 安装 cantor 终端程序
     go install github.com/evercyan/cantor/cmd/cantor@latest
     # 上传文件
