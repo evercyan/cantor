@@ -31,23 +31,32 @@
 - 打开应用
 
 - GitHub 配置
-```text
-未配置时, 会自动打开编辑窗口, 也可以通过点击设置按钮触发编辑窗口
-配置存储于 `~/.cantor/config.yaml`
-```
+    ```text
+    未配置时, 会自动打开编辑窗口, 也可以通过点击设置按钮触发编辑窗口
+    配置存储于 `~/.cantor/config.yaml`
+    ```
 
 - 上传图片
-```text
-点击上传按钮, 或者菜单-文件-上传图片, 可批量选择图片进行上传
-单次最多可上传 10 张图片, 单张图片最大支持 4M, 图片格式仅支持 png gif jpg jpeg
-```
+    ```text
+    点击上传按钮, 或者菜单-文件-上传图片, 可批量选择图片进行上传
+    单次最多可上传 10 张图片, 单张图片最大支持 4M, 图片格式仅支持 png gif jpg jpeg
+    ```
 
 - 终端使用
 
-```shell
-go install github.com/evercyan/cantor/cmd/cantor@latest
-cantor upload ~/demo.png ~/demo1.png
-```
+    ```shell
+    # 安装 cantor 终端程序
+    go install github.com/evercyan/cantor/cmd/cantor@latest
+    # 上传文件
+    cantor upload ~/demo.png ~/demo1.png
+    
+    # 安装终端程序后, 可在 typora 里如下图所示配置图片上传, 其他应用亦是同理
+    ```
+
+![typora-1](https://cdn.jsdelivr.net/gh/evercyan/repository/resource/93/9355e89e0a615750862320fba0db2bbd.png)
+
+![typora-2](https://cdn.jsdelivr.net/gh/evercyan/repository/resource/56/5687102c40a183568eb6d5e35e8612b3.png)
+
 
 ---
 
