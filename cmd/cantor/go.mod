@@ -1,4 +1,4 @@
-module cantor
+module github.com/evercyan/cantor/cmd/cantor
 
 go 1.18
 
