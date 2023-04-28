@@ -11,17 +11,22 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	flagCli = true
+// env 运行环境
+var env string
+
+// ...
+const (
+	envTypora = "typora"
 )
 
-func main() {
-	root := &cobra.Command{
+// ...
+var (
+	root = &cobra.Command{
 		Use:     "cantor",
-		Short:   "cantor: 一个简单好用的图床应用",
-		Version: "v0.0.1",
+		Short:   "一个简单好用的图床应用",
+		Version: "v0.1.0",
 	}
-	root.AddCommand(&cobra.Command{
+	upload = &cobra.Command{
 		Use:   "upload",
 		Short: "批量上传图片文件, e.g. cantor upload ~/demo.png ~/demo2.png",
 		Run: func(cmd *cobra.Command, args []string) {
@@ -29,38 +34,43 @@ func main() {
 				xcolor.Fail("Error:", "图片路径不能为空")
 				return
 			}
-
 			app := backend.NewApp()
 			app.OnStartup(context.Background())
 			if app.Git.Repo == "" {
 				xcolor.Fail("Error:", "无效的配置文件, 请先安装 Cantor 应用设置 Git 配置")
 				os.Exit(0)
 			}
-
-			for _, filepath := range args {
-				if !xfile.IsExist(filepath) || !xfile.IsFile(filepath) {
-					xcolor.Fail(filepath, "无效的图片路径")
+			for _, fpath := range args {
+				if !xfile.IsExist(fpath) || !xfile.IsImage(fpath) {
+					xcolor.Fail("✘", "无效的图片")
 					continue
 				}
-				if err := app.CheckFile(filepath); err != nil {
-					xcolor.Fail(filepath, err.Error())
+				if err := app.CheckFile(fpath); err != nil {
+					xcolor.Fail("✘", err.Error())
 					continue
 				}
-				fileUrl, err := app.Upload(filepath, true)
+				fileUrl, err := app.Upload(fpath, true)
 				if err != nil {
-					xcolor.Fail(filepath, err.Error())
+					xcolor.Fail("✘", err.Error())
 					continue
 				}
-				if flagCli {
-					xcolor.Success(filepath, fileUrl)
-				} else {
+				if env == envTypora {
+					// 在 typora 图片上传使用时只输出文件路径
 					fmt.Println(fileUrl)
+				} else {
+					xcolor.Success("➤", fpath)
+					xcolor.Success("✔︎", fileUrl)
 				}
 			}
 		},
-	})
-	root.PersistentFlags().BoolVarP(
-		&flagCli, "cli", "c", true, "run mode, default cli",
-	)
+	}
+)
+
+func init() {
+	root.AddCommand(upload)
+	root.PersistentFlags().StringVarP(&env, "env", "", "cli", "env, default cli")
+}
+
+func main() {
 	root.Execute()
 }
